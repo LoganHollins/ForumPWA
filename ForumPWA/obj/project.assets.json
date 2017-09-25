@@ -9778,11 +9778,11 @@
       "hideWarningsAndErrors": true
     },
     "restore": {
-      "projectUniqueName": "C:\\Users\\Logan\\Documents\\ForumPWA\\ForumPWA\\ForumPWA.csproj",
+      "projectUniqueName": "C:\\Users\\Logan\\Documents\\GitHub\\ForumPWA\\ForumPWA\\ForumPWA.csproj",
       "projectName": "ForumPWA",
-      "projectPath": "C:\\Users\\Logan\\Documents\\ForumPWA\\ForumPWA\\ForumPWA.csproj",
+      "projectPath": "C:\\Users\\Logan\\Documents\\GitHub\\ForumPWA\\ForumPWA\\ForumPWA.csproj",
       "packagesPath": "C:\\Users\\Logan\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Logan\\Documents\\ForumPWA\\ForumPWA\\obj\\",
+      "outputPath": "C:\\Users\\Logan\\Documents\\GitHub\\ForumPWA\\ForumPWA\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Logan\\AppData\\Roaming\\NuGet\\NuGet.Config",
