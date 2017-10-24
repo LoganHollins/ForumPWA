@@ -2,9 +2,9 @@
 
 namespace ForumPWA.Models
 {
-    public class User
+    public class User : IdentityObject
     {
-        public int Id { get; set; }
+        public override int Id { get; set; }
         public string UserName { get; set; }
         public string FullName { get; set; }
         public string AboutMe { get; set; }

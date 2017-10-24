@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace ForumPWA.Infrastructure
 {
-    public class CategoryRepository
+    public class CategoryRepository : Repository<Category>
     {
-        IEnumerable<Category> _categories = new List<Category>
+        static IEnumerable<Category> _categories = new List<Category>
         {
             new Category
             {
@@ -27,10 +27,9 @@ namespace ForumPWA.Infrastructure
             }
         };
 
-        public List<Category> All => _categories.ToList();
-        public Category Get(int id) => All.Where(c => c.Id == id).FirstOrDefault();
-
-        public void Add(Category category) => _categories = All.Append(category);
-        public void Delete(int id) => All.RemoveAll(c => c.Id == id);
+        public CategoryRepository() 
+            : base(_categories)
+        {
+        }
     }
 }

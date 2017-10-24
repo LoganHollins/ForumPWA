@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace ForumPWA.Models
 {
-    public class Topic
+    public class Topic : IdentityObject
     {
-        public int Id { get; set; }
+        public override int Id { get; set; }
         public string Title { get; set; }
         public int CategoryId { get; set; }
         public string Content { get; set; }

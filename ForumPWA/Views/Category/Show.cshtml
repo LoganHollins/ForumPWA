@@ -1,9 +1,21 @@
-﻿@model Category
+﻿@model CategoryContext
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-    ViewBag.Title = $"Category - {Model.Name}";
+    ViewBag.Title = $"Category - {Model.Category.Name}";
 }
 
-<h2>@Model.Name</h2>
+<h2>@Model.Category.Name</h2>
+
+<div><h4>Topics: </h4></div>
+<div>
+    <ul>
+        @foreach (var topic in Model.Topics)
+        {
+            <li>
+                <a asp-controller="topic" asp-action="show" asp-route-id="@topic.Id">@topic.Title</a>
+            </li>
+        }
+    </ul>
+</div>

@@ -1,0 +1,15 @@
+﻿@model IEnumerable<Topic>
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<ul>
+    @foreach (var topic in Model)
+    {
+        <li>
+            <a asp-controller="topic" asp-action="show" asp-route-id="@topic.Id">@topic.Title</a>
+        </li>
+    }
+</ul>
