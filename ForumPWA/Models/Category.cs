@@ -7,7 +7,6 @@ namespace ForumPWA.Models
 {
     public class Category : IdentityObject
     {
-        public override int Id { get; set; }
         public User Author { get; set; }
         public string Name { get; set; }
     }

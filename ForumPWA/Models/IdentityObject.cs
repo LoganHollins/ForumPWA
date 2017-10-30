@@ -7,6 +7,6 @@ namespace ForumPWA.Models
 {
     public abstract class IdentityObject
     {
-        public virtual int Id { get; set; }
+        public virtual int? Id { get; set; }
     }
 }

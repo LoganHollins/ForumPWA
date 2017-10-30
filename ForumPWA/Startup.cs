@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using ForumPWA.Infrastructure;
 
 namespace ForumPWA
 {
@@ -29,6 +30,9 @@ namespace ForumPWA
         {
             // Add framework services.
             services.AddMvc();
+            services.AddSingleton<SubscriptionRepository>();
+            services.AddSingleton<TopicRepository>();
+            services.AddSingleton<CategoryRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

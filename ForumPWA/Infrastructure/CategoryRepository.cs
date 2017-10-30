@@ -8,7 +8,7 @@ namespace ForumPWA.Infrastructure
 {
     public class CategoryRepository : Repository<Category>
     {
-        static IEnumerable<Category> _categories = new List<Category>
+        static List<Category> _categories = new List<Category>
         {
             new Category
             {

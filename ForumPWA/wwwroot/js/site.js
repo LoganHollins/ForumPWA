@@ -1,8 +1,4 @@
-﻿var pubkey = 'BIzudo5gPnMUVAhQrTRDEuIMPOLwtIInO-KHrukWLkguSyCyKNrYnaHr36_zK4bfvJ5hMxu7HFWlAr0n579-tbE';
-// eCB1JO4enyxjbeXxzMbTDiYHVhJeeweq3hWMXkOHliU
-
-// Write your Javascript code.
-if ('serviceWorker' in navigator) {
+﻿if ('serviceWorker' in navigator) {
     navigator
         .serviceWorker
         .register('/sw.js', { scope: '/' })
@@ -10,13 +6,8 @@ if ('serviceWorker' in navigator) {
         .catch(console.error);
 }
 
-if (Notification.permission === 'granted') {
-    showNotification();
-} else if (Notification.permission !== 'denied') {
-    Notification.requestPermission().then(p => {
-        if (p === 'granted')
-            showNotification();
-    });
+if (Notification.permission !== 'granted' && Notification.permission !== 'denied') {
+    Notification.requestPermission();
 }
 
 function showNotification() {

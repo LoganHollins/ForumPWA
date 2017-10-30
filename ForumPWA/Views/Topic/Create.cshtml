@@ -1,0 +1,23 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewBag.Title = "New Topic";
+}
+<h2>New Topic</h2>
+<form asp-controller="Topic" asp-action="create" method="post">
+    <div class="form-group">
+        <label for="title">Title</label>
+        <input name="title" type="text" class="form-control" id="title" placeholder="Title">
+    </div>
+    <div class="form-group">
+        <label for="categoryId">Category Id</label>
+        <input name="categoryId" type="number" class="form-control" id="categoryId" placeholder="categoryId">
+    </div>
+    <div class="form-group">
+        <label for="content">File input</label>
+        <textarea name="content" id="content"class="form-control">
+        </textarea>
+    </div>
+    <button type="submit" class="btn btn-default">Submit</button>
+</form>

@@ -8,6 +8,7 @@
 
 <h2>@Model.Category.Name</h2>
 
+<button id="notify-btn" class="notify-btn btn btn-default hidden" disabled><span class="glyphicons glyphicons-bell"></span> Get Notified of new Topics</button>
 <div><h4>Topics: </h4></div>
 <div>
     <ul>
@@ -19,3 +20,9 @@
         }
     </ul>
 </div>
+
+
+<div>
+    <a asp-controller="Topic" asp-action="Create">Create new Topics!</a>
+</div>
+<script src="~/js/topic.js"></script>

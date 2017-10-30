@@ -8,7 +8,7 @@ namespace ForumPWA.Infrastructure
 {
     public class TopicRepository : Repository<Topic>
     {
-        static IEnumerable<Topic> _topics = new List<Topic>
+        static List<Topic> _topics = new List<Topic>
         {
             new Topic
             {

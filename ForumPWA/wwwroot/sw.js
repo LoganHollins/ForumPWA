@@ -1,13 +1,4 @@
-﻿const version = 'v7';
-//self.addEventListener('beforeinstallprompt', evt => {
-//    evt.preventDefault();
-//    promptEvt = evt;
-
-//    promptEvt.userChoice.then(choice => {
-//        console.log(choice.outcone);
-//    });
-//    console.log('The app was installed!');
-//});
+﻿const version = 'v8';
 
 self.addEventListener('install', function (event) {
     event.waitUntil(
@@ -18,60 +9,60 @@ self.addEventListener('install', function (event) {
                     '/css/site.css',
                     'offline.html',
                     '/images/android-chrome-192x192.png',
-                    '/images/android-chrome-512x512.png',
-                    'sw.js'
+                    '/images/android-chrome-512x512.png'
                 ]);
             })
     );
 });
 
+self.addEventListener('push', evt => {
+    console.log('pushed');
+    var payload = evt.data.json(),
+        options = {
+            body: 'New Topic: ' + payload.topic.title,
+            icon: '/images/android-chrome-512x512.png',
+            badge: '/images/favicon-32x32.png',
+            data: payload,
+            actions: [
+                { action: 'view', title: 'See Topic', icon: '/images/favicon-32x32.png' },
+                { action: 'later', title: 'Check it Later', icon: '/images/favicon-32x32.png' },
+            ]
+        };
 
-self.addEventListener('fetch', function (event) {
-
-    event.respondWith(caches.match(event.request)
-        .then(function (cResposne) {
-            console.log(navigator.onLine);
-            if (!navigator.onLine) {
-                if (cResposne) {
-                    return cResposne;
-                }
-
-                return caches.match(new Request('offline.html'));
-            }
-
-            return fetchAndUpdate(event.request);
-        }).catch(function (err) {
-            console.error(err);
-        })
-    );
+    evt.waitUntil(self.registration.showNotification('New topic on SuperForum!', options));
 });
 
-self.registration.showNotification('Welcome to SuperForum!', {
-    body: 'Welcome to SuperForum.  Check out our cool fourm!',
-    badge: '/images/favicon-32x32.png',
-    icon: '/images/android-chrome-512x512.png',
-    tag: 'SuperForumIntro',
-    renotify: true,
-    requireInteraction: false,
-    vibrate: [200, 100, 200],
-    dir: 'ltr',
-    lang: 'en-CA',
-    timestamp: Date.now(),
-    actions: [
-        {action: 'viewCategories', title:'Browse Forum', icon: '/images/favicon-32x32.png'}
-    ]
-});
+//self.addEventListener('fetch', function (event) {
+
+//    event.respondWith(caches.match(event.request)
+//        .then(function (cResposne) {
+//            if (!navigator.onLine) {
+//                if (cResposne) {
+//                    return cResposne;
+//                }
+
+//                return caches.match(new Request('offline.html'));
+//            }
+//            console.log('EVENT: ' + event);
+//            return fetchAndUpdate(event);
+//        }).catch(function (err) {
+//            console.error(err);
+//        })
+//    );
+//});
+
 
 self.addEventListener('notificationclick', evt => {
     evt.notification.close();
 
+    var payload = evt.notification.data;
+
     switch (evt.action) {
-        case 'viewCategories':
-            console.log('viewCategories clicked!');
+        case 'later':
             break;
+        case 'view':
         default:
-            console.log('notification clicked');
-            break;
+            evt.waitUntil(clients.openWindow(`${evt.target.location.origin}/Topic/show/${payload.topic.id}`));
     }
     // handle action clicks
 });
@@ -80,33 +71,20 @@ self.addEventListener('notificationclose', evt => {
     console.log('notification closed');
 });
 
-
-function fetchAndUpdate(request) {
-    return fetch(request)
+function fetchAndUpdate(evt) {
+    return fetch(evt.request)
         .then(function (res) {
             if (res) {
                 return caches.open(version)
                     .then(function (cache) {
-                        return cache.put(request, res.clone())
-                            .then(function () {
-                                return res;
-                            });
+                        if (evt.method === 'POST' || evt.method === 'DELETE' && evt.method === 'GET')
+                            return;
+                        else
+                            return cache.put(evt.request, res.clone())
+                                .then(function () {
+                                    return res;
+                                });
                     });
             }
         })
-}
-
-function urlBase64ToUint8Array(base64String) {
-    const padding = '='.repeat((4 - base64String.length % 4) % 4);
-    const base64 = (base64String + padding)
-        .replace(/\-/g, '+')
-        .replace(/_/g, '/');
-
-    const rawData = window.atob(base64);
-    const outputArray = new Uint8Array(rawData.length);
-
-    for (let i = 0; i < rawData.length; ++i) {
-        outputArray[i] = rawData.charCodeAt(i);
-    }
-    return outputArray;
 }

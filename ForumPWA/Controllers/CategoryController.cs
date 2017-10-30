@@ -8,23 +8,24 @@ using System.Threading.Tasks;
 
 namespace ForumPWA.Controllers
 {
+    [Route("[controller]")]
     public class CategoryController : Controller
     {
-        public CategoryController()
+        public CategoryController(TopicRepository topicRepository, CategoryRepository categoryRepository)
         {
-            Repository = new CategoryRepository();
-            TopicRepository = new TopicRepository();
+            TopicRepository = topicRepository;
+            CategoryRepository = categoryRepository;
         }
 
-        CategoryRepository Repository { get; set; }
         TopicRepository TopicRepository { get; }
+        public CategoryRepository CategoryRepository { get; }
 
         [HttpGet("categories")]
         public IActionResult Index() =>
-            View(Repository.Items);
+            View(CategoryRepository.Items);
 
         [HttpGet("categories/{id}")]
         public IActionResult Show(int id) =>
-            View(new CategoryContext(Repository.Get(id), TopicRepository.GetByCategoryId(id)));
+            View(new CategoryContext(CategoryRepository.Get(id), TopicRepository.GetByCategoryId(id)));
     }
 }
