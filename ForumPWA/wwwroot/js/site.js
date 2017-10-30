@@ -1,4 +1,7 @@
-﻿// Write your Javascript code.
+﻿var pubkey = 'BIzudo5gPnMUVAhQrTRDEuIMPOLwtIInO-KHrukWLkguSyCyKNrYnaHr36_zK4bfvJ5hMxu7HFWlAr0n579-tbE';
+// eCB1JO4enyxjbeXxzMbTDiYHVhJeeweq3hWMXkOHliU
+
+// Write your Javascript code.
 if ('serviceWorker' in navigator) {
     navigator
         .serviceWorker
@@ -17,24 +20,24 @@ if (Notification.permission === 'granted') {
 }
 
 function showNotification() {
-    var notification = new Notification('Welcome to the site!', {
-        body: 'Welcome to SuperForum!',
-        badge: '/images/favicon-32x32.png',
-       icon: '/images/android-chrome-512x512.png',
-        tag: 'SuperForumIntro',
-        renotify: true,
-        requireInteraction: false,
-        vibrate: [200, 100, 200],
-        dir: 'ltr',
-        lang: 'en-CA',
-        timestamp: Date.now()
-    });
+    //var notification = new Notification('Welcome to the site!', {
+    //    body: 'Welcome to SuperForum!',
+    //    badge: '/images/favicon-32x32.png',
+    //   icon: '/images/android-chrome-512x512.png',
+    //    tag: 'SuperForumIntro',
+    //    renotify: true,
+    //    requireInteraction: false,
+    //    vibrate: [200, 100, 200],
+    //    dir: 'ltr',
+    //    lang: 'en-CA',
+    //    timestamp: Date.now()
+    //});
 
-    notification.addEventListener('error', evt => {
-        console.error('There was a problem', evt);
-    });
+    //notification.addEventListener('error', evt => {
+    //    console.error('There was a problem', evt);
+    //});
 
-    notification.addEventListener('click', evt => {
-        console.log('Notification clicked :)');
-    });
+    //notification.addEventListener('click', evt => {
+    //    console.log('Notification clicked :)');
+    //});
 }
