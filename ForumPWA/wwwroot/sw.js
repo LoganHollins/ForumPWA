@@ -47,6 +47,7 @@ self.addEventListener('fetch', function (event) {
 });
 
 
+
 function fetchAndUpdate(request) {
     return fetch(request)
         .then(function (res) {
