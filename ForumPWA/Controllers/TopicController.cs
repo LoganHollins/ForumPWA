@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace ForumPWA.Controllers
 {
+    [Route("[controller]")]
     public class TopicController : Controller
     {
         public TopicController()

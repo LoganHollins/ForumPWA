@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - ForumPWA</title>
 
+    
     <environment names="Development">
         <link rel="stylesheet" href="~/css/site.css" />
     </environment>
@@ -15,10 +16,15 @@
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+
+    <link rel="manifest" href="/manifest.json" />
     @Html.Raw(JavaScriptSnippet.FullScript)
 </head>
 <body>
-
+    <a href="/"><img src="~/images/android-chrome-192x192.png" alt="SuperForum" /></a>
     <div class="container body-content">
         @RenderBody()
         <hr />
@@ -47,7 +53,6 @@
         </script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
-
     @RenderSection("Scripts", required: false)
 </body>
 </html>
