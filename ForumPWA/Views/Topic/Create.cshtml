@@ -5,7 +5,7 @@
     ViewBag.Title = "New Topic";
 }
 <h2>New Topic</h2>
-<form asp-controller="Topic" asp-action="create" method="post">
+<form asp-controller="Topic" asp-action="create" id="new-topic-form">
     <div class="form-group">
         <label for="title">Title</label>
         <input name="title" type="text" class="form-control" id="title" placeholder="Title">
@@ -21,3 +21,4 @@
     </div>
     <button type="submit" class="btn btn-default">Submit</button>
 </form>
+<script src="~/js/CreateTopic.js"></script>

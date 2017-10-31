@@ -1,4 +1,67 @@
-﻿const version = 'v8';
+﻿//const version = 'v8';
+var version = 7;
+var db;
+self.addEventListener('sync', function (event) {
+    console.log('handling sync event');
+    if (event.tag === 'sync-topics') {
+        event.waitUntil(
+            openDatabase('superforum', version)
+                .then(evt => {
+                    console.log('handling sync-topics event')
+                    db = evt.target.result,
+                    topics = db.transaction(['topics'], 'readwrite').objectStore('topics');
+                    return getData(topics, t => t.isSynced === false);
+                }).then(results => {
+                    for (result of results) {
+                        var body = new FormData();
+                        for (key in result) {
+                            body.append(key, result[key]);
+                        }
+                        console.log("Sending create request");
+
+                        fetch('/Topic/create', {
+                            method: 'POST',
+                            body: body,
+                            credentials: 'include'
+                        })
+                        .then(res => {
+                            if (res.ok) {
+                                console.log("Writing To IndexDB");
+                                result.isSynced = true;
+                                db.transaction(['topics'], 'readwrite').objectStore('topics').put(result, result.topcKey);
+                            }
+                        })
+                    }
+                })
+        );
+    }
+});
+
+function openDatabase(name, version) {
+    return new Promise((resolve, reject) => {
+        var idb = indexedDB.open(name, version);
+        idb.onsuccess = resolve;
+        idb.onerror = reject;
+    });
+};
+
+function getData(objectStore, predicate) {
+    return new Promise((resolve, reject) => {
+        var r = [];
+        function onsuccess(evt) {
+            cursor = evt.target.result;
+            if (cursor) {
+                if (predicate(cursor.value)) {
+                    r.push(cursor.value)
+                }
+                cursor.continue();
+            } else {
+                resolve(r);
+            }
+        }
+        objectStore.openCursor().onsuccess = onsuccess;
+    });
+};
 
 self.addEventListener('install', function (event) {
     event.waitUntil(
@@ -8,6 +71,7 @@ self.addEventListener('install', function (event) {
                 return cache.addAll([
                     '/css/site.css',
                     'offline.html',
+                    '/',
                     '/images/android-chrome-192x192.png',
                     '/images/android-chrome-512x512.png'
                 ]);
@@ -63,7 +127,6 @@ self.addEventListener('notificationclick', evt => {
         default:
             evt.waitUntil(clients.openWindow(`${evt.target.location.origin}/Topic/show/${payload.topic.id}`));
     }
-    // handle action clicks
 });
 
 self.addEventListener('notificationclose', evt => {

@@ -50,7 +50,7 @@ notifyButton.addEventListener('click', function (evt) {
     this.disabled = true;
     sp.sw.pushManager.getSubscription().then(s => {
         if (s !== null) {
-        s.unsubscribe();
+            s.unsubscribe();
             btnIcon.classList.remove('glyphicon-check');
             btnIcon.classList.add('glyphicon-bell');
             this.disabled = false;
@@ -64,11 +64,11 @@ notifyButton.addEventListener('click', function (evt) {
                 credentials: 'same-origin',
                 body: JSON.stringify(s)
             }))
-            .then(res => {
-                btnIcon.classList.remove('glyphicon-bell');
-                btnIcon.classList.add('glyphicon-check');
-                this.disabled = false;
-            });
+                .then(res => {
+                    btnIcon.classList.remove('glyphicon-bell');
+                    btnIcon.classList.add('glyphicon-check');
+                    this.disabled = false;
+                });
         }
     })
-})
+});
