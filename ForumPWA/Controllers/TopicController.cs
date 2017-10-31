@@ -75,9 +75,8 @@ namespace ForumPWA.Controllers
                 {
                     webPushClient.SendNotification(subscription, payload, vapidDetails);
                 }
-                catch (WebPushException ex)
+                catch (Exception)
                 {
-
                 }
             }
         }

@@ -32,24 +32,23 @@ self.addEventListener('push', evt => {
     evt.waitUntil(self.registration.showNotification('New topic on SuperForum!', options));
 });
 
-//self.addEventListener('fetch', function (event) {
+self.addEventListener('fetch', function (event) {
 
-//    event.respondWith(caches.match(event.request)
-//        .then(function (cResposne) {
-//            if (!navigator.onLine) {
-//                if (cResposne) {
-//                    return cResposne;
-//                }
+    event.respondWith(caches.match(event.request)
+        .then(function (cResposne) {
+            if (!navigator.onLine) {
+                if (cResposne) {
+                    return cResposne;
+                }
 
-//                return caches.match(new Request('offline.html'));
-//            }
-//            console.log('EVENT: ' + event);
-//            return fetchAndUpdate(event);
-//        }).catch(function (err) {
-//            console.error(err);
-//        })
-//    );
-//});
+                return caches.match(new Request('offline.html'));
+            }
+            return fetchAndUpdate(event);
+        }).catch(function (err) {
+            console.error(err);
+        })
+    );
+});
 
 
 self.addEventListener('notificationclick', evt => {

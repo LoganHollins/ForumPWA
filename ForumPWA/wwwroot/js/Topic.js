@@ -19,7 +19,7 @@ if ('serviceWorker' in navigator && 'PushManager' in window) {
         sw.pushManager.getSubscription()
             .then(s => {
                 var isSubscribed = s !== null;
-                if (s) {
+                if (isSubscribed) {
                     btnIcon.classList.remove('glyphicon-bell');
                     btnIcon.classList.add('glyphicon-check');
                 }
@@ -50,7 +50,7 @@ notifyButton.addEventListener('click', function (evt) {
     this.disabled = true;
     sp.sw.pushManager.getSubscription().then(s => {
         if (s !== null) {
-            s.unsubscribe();
+        s.unsubscribe();
             btnIcon.classList.remove('glyphicon-check');
             btnIcon.classList.add('glyphicon-bell');
             this.disabled = false;
