@@ -1,40 +1,43 @@
-﻿if ('serviceWorker' in navigator) {
-    navigator
-        .serviceWorker
-        .register('/sw.js', { scope: '/' })
-        .then(console.log)
-        .catch(console.error);
-}
+﻿window.addEventListener("DOMContentLoaded", function () {
 
-if (Notification.permission !== 'granted' && Notification.permission !== 'denied') {
-    Notification.requestPermission();
-}
+    if ('serviceWorker' in navigator) {
+        navigator
+            .serviceWorker
+            .register('/sw.js', { scope: '/' })
+            .then(console.log)
+            .catch(console.error);
+    }
 
-function showNotification() {
-    var notification = new Notification('Welcome to the site!', {
-        body: 'Welcome to SuperForum!',
-        badge: '/images/favicon-32x32.png',
-       icon: '/images/android-chrome-512x512.png',
-        tag: 'SuperForumIntro',
-        renotify: true,
-        requireInteraction: false,
-        vibrate: [200, 100, 200],
-        dir: 'ltr',
-        lang: 'en-CA',
-        timestamp: Date.now()
-    });
+    if (Notification.permission !== 'granted' && Notification.permission !== 'denied') {
+        Notification.requestPermission();
+    }
 
-    notification.addEventListener('error', evt => {
-        console.error('There was a problem', evt);
-    });
+    function showNotification() {
+        var notification = new Notification('Welcome to the site!', {
+            body: 'Welcome to SuperForum!',
+            badge: '/images/favicon-32x32.png',
+            icon: '/images/android-chrome-512x512.png',
+            tag: 'SuperForumIntro',
+            renotify: true,
+            requireInteraction: false,
+            vibrate: [200, 100, 200],
+            dir: 'ltr',
+            lang: 'en-CA',
+            timestamp: Date.now()
+        });
 
-    notification.addEventListener('click', evt => {
-        console.log('Notification clicked :)');
-    });
-}
+        notification.addEventListener('error', evt => {
+            console.error('There was a problem', evt);
+        });
 
-if (!('indexedDB' in window)) {
-    console.log('This browser doesn\'t support IndexedDB');
-}
+        notification.addEventListener('click', evt => {
+            console.log('Notification clicked :)');
+        });
+    }
 
-showNotification();
+    if (!('indexedDB' in window)) {
+        console.log('This browser doesn\'t support IndexedDB');
+    }
+
+    //showNotification();
+});

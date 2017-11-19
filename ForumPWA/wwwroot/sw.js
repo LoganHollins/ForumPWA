@@ -1,6 +1,8 @@
+importScripts('/Content/sw-toolbox/sw-toolbox.js')
+
 const spCaches = {
-    'static': 'static-v5',
-    'dynamic': 'dynamic-v5',
+    'static': 'static-v6',
+    'dynamic': 'dynamic-v6',
 };
 var db;
 
@@ -25,10 +27,9 @@ self.addEventListener('install', function (event) {
             .open(spCaches.static)
             .then(function (cache) {
                 return cache.addAll([
-                    'offline.html',
-                    '/',
-                    '/images/android-chrome-192x192.png',
-                    '/images/android-chrome-512x512.png'
+                    '/offline.html',
+                    '/Content/images/android-chrome-192x192.png',
+                    '/Content/images/android-chrome-512x512.png'
                 ]);
             }));
 });
@@ -71,7 +72,6 @@ self.addEventListener('sync', function (event) {
     }
 });
 
-importScripts('/node_modules/sw-toolbox/companion.js')
 
 function openDatabase(name, dbVersion) {
     return new Promise((resolve, reject) => {
@@ -105,12 +105,12 @@ self.addEventListener('push', evt => {
     var payload = evt.data.json(),
         options = {
             body: 'New Topic: ' + payload.topic.title,
-            icon: '/images/android-chrome-512x512.png',
-            badge: '/images/favicon-32x32.png',
+            icon: '/Content/images/android-chrome-512x512.png',
+            badge: '/Content/images/favicon-32x32.png',
             data: payload,
             actions: [
-                { action: 'view', title: 'See Topic', icon: '/images/favicon-32x32.png' },
-                { action: 'later', title: 'Check it Later', icon: '/images/favicon-32x32.png' },
+                { action: 'view', title: 'See Topic', icon: '/Content/images/favicon-32x32.png' },
+                { action: 'later', title: 'Check it Later', icon: '/Content/images/favicon-32x32.png' },
             ]
         };
 
@@ -136,33 +136,21 @@ self.addEventListener('notificationclose', evt => {
     console.log('notification closed');
 });
 
-toolbox.router.get('/css/*', toolbox.cacheFirst, {
+toolbox.router.get('/Content/*', toolbox.cacheFirst, {
     cache: {
         name: spCaches.static,
         maxAgeSections: 60 * 60 * 24 * 365
     }
 });
 
-toolbox.router.get('/images/*', toolbox.cacheFirst, {
+toolbox.router.get('/*', toolbox.networkFirst, {
+    networkTimeoutSeconds: 1,
     cache: {
-        name: spCaches.static,
-        maxAgeSections: 60 * 60 * 24 * 365
+        name: spCaches.dynamic,
+        maxEntries: 4
     }
 });
 
-toolbox.router.get('/js/*', toolbox.cacheFirst, {
-    cache: {
-        name: spCaches.static,
-        maxAgeSections: 60 * 60 * 24 * 365
-    }
-});
-
-toolbox.router.get('/lib/*', toolbox.cacheFirst, {
-    cache: {
-        name: spCaches.static,
-        maxAgeSections: 60 * 60 * 24 * 365
-    }
-});
 
 //self.addEventListener('fetch', function (event) {
 

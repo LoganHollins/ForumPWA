@@ -10,10 +10,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="node_modules\sw-toolbox\package.json" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore" Version="1.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.3" />
@@ -35,33 +31,34 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="node_modules\" />
     <Folder Include="Repositories\" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="node_modules\sw-toolbox\companion.js" />
-    <None Include="node_modules\sw-toolbox\lib\helpers.js" />
-    <None Include="node_modules\sw-toolbox\lib\idb-cache-expiration.js" />
-    <None Include="node_modules\sw-toolbox\lib\listeners.js" />
-    <None Include="node_modules\sw-toolbox\lib\options.js" />
-    <None Include="node_modules\sw-toolbox\lib\route.js" />
-    <None Include="node_modules\sw-toolbox\lib\router.js" />
-    <None Include="node_modules\sw-toolbox\lib\strategies\cacheFirst.js" />
-    <None Include="node_modules\sw-toolbox\lib\strategies\cacheOnly.js" />
-    <None Include="node_modules\sw-toolbox\lib\strategies\fastest.js" />
-    <None Include="node_modules\sw-toolbox\lib\strategies\index.js" />
-    <None Include="node_modules\sw-toolbox\lib\strategies\networkFirst.js" />
-    <None Include="node_modules\sw-toolbox\lib\strategies\networkOnly.js" />
-    <None Include="node_modules\sw-toolbox\lib\sw-toolbox.js" />
-    <None Include="node_modules\sw-toolbox\LICENSE" />
-    <None Include="node_modules\sw-toolbox\README.md" />
-    <None Include="node_modules\sw-toolbox\sw-toolbox.js" />
-    <None Include="node_modules\sw-toolbox\sw-toolbox.js.map" />
+    <None Include="wwwroot\Content\sw-toolbox\companion.js" />
+    <None Include="wwwroot\Content\sw-toolbox\lib\helpers.js" />
+    <None Include="wwwroot\Content\sw-toolbox\lib\idb-cache-expiration.js" />
+    <None Include="wwwroot\Content\sw-toolbox\lib\listeners.js" />
+    <None Include="wwwroot\Content\sw-toolbox\lib\options.js" />
+    <None Include="wwwroot\Content\sw-toolbox\lib\route.js" />
+    <None Include="wwwroot\Content\sw-toolbox\lib\router.js" />
+    <None Include="wwwroot\Content\sw-toolbox\lib\strategies\cacheFirst.js" />
+    <None Include="wwwroot\Content\sw-toolbox\lib\strategies\cacheOnly.js" />
+    <None Include="wwwroot\Content\sw-toolbox\lib\strategies\fastest.js" />
+    <None Include="wwwroot\Content\sw-toolbox\lib\strategies\index.js" />
+    <None Include="wwwroot\Content\sw-toolbox\lib\strategies\networkFirst.js" />
+    <None Include="wwwroot\Content\sw-toolbox\lib\strategies\networkOnly.js" />
+    <None Include="wwwroot\Content\sw-toolbox\lib\sw-toolbox.js" />
+    <None Include="wwwroot\Content\sw-toolbox\LICENSE" />
+    <None Include="wwwroot\Content\sw-toolbox\README.md" />
+    <None Include="wwwroot\Content\sw-toolbox\sw-toolbox.js" />
+    <None Include="wwwroot\Content\sw-toolbox\sw-toolbox.js.map" />
     <None Include="wwwroot\sw.js" />
   </ItemGroup>
 
   <ItemGroup>
-    <TypeScriptCompile Include="node_modules\sw-toolbox\index.d.ts" />
+    <TypeScriptCompile Include="wwwroot\Content\sw-toolbox\index.d.ts" />
   </ItemGroup>
 
 </Project>
