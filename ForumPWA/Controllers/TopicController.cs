@@ -40,7 +40,7 @@ namespace ForumPWA.Controllers
             topic.Id = Repository.NextId;
             Repository.Add(topic);
             NotifyUser(topic.Id.Value);
-            return Ok();
+            return RedirectToAction("show", new { Id = topic.Id });
         }
 
         [HttpPost("subscription")]

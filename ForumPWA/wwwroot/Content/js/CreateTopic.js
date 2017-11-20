@@ -3,7 +3,7 @@
     var categoryId = document.getElementById('categoryId');
     var content = document.getElementById('content');
 
-    var version = 7;
+    var version = 13;
     var idb = indexedDB.open('superforum', version);
 
     idb.onupgradeneeded = function (e) {
@@ -18,38 +18,41 @@
         }
     };
 
-
-
-
     document.getElementById("new-topic-form").addEventListener("submit", function (evt) {
-        evt.preventDefault();
         console.log("submit");
+        if(!navigator.onLine){
+            console.log("offline submit");
+            evt.preventDefault();
+            var open = indexedDB.open('superforum', version);
 
-        var open = indexedDB.open('superforum', version);
+            open.onsuccess = function (e) {
+                var db = open.result;
+                console.log("open onsuccess");
 
-        open.onsuccess = function (e) {
-            var db = open.result;
-            console.log("openupgrade onsuccess");
+                var topics = db.transaction('topics', 'readwrite').objectStore('topics');
+                var val = {
+                    title: title.value,
+                    categoryId: categoryId.value,
+                    content: content.value,
+                    topicKey: title.value + categoryId.value + content.value,
+                    isSynced: false
+                };
 
-            var topics = db.transaction('topics', 'readwrite').objectStore('topics');
-            var val = {
-                title: title.value,
-                categoryId: categoryId.value,
-                content: content.value,
-                topicKey: title.value + categoryId.value + content.value,
-                isSynced: false
+                operation = topics.put(val);
+
+                operation.onsuccess = () => {
+                    if ('serviceWorker' in navigator && 'SyncManager' in window) {
+                        navigator.serviceWorker.ready.then(sw => {
+                            console.log("Syncing topics");
+                            return sw.sync.register('sync-topics')
+                        })
+                    } else {
+                    }
+                };
             };
+        } else {
+            console.log('send data to server via ajax');
+}
 
-            operation = topics.add(val);
-
-            if ('serviceWorker' in navigator && 'SyncManager' in window) {
-                navigator.serviceWorker.ready.then(sw => {
-                    console.log("Syncing topics");
-                    return sw.sync.register('sync-topics')
-                })
-            } else {
-
-            }
-        };
     });
 });

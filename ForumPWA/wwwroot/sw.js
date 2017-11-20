@@ -1,11 +1,10 @@
 importScripts('/Content/sw-toolbox/sw-toolbox.js')
 
 const spCaches = {
-    'static': 'static-v6',
-    'dynamic': 'dynamic-v6',
+    'static': 'static-v31',
+    'dynamic': 'dynamic-v31',
 };
 var db;
-
 
 self.addEventListener('activate', function (event) {
     event.waitUntil(
@@ -13,7 +12,6 @@ self.addEventListener('activate', function (event) {
             .then(function (keys) {
                 return Promise.all(keys.filter(function (key) {
                     return !Object.values(spCaches).includes(key);
-
                 }).map(function (key) {
                     return caches.delete(key);
                 }));
@@ -27,14 +25,23 @@ self.addEventListener('install', function (event) {
             .open(spCaches.static)
             .then(function (cache) {
                 return cache.addAll([
-                    '/offline.html',
+                    '/Content/offline.html',
                     '/Content/images/android-chrome-192x192.png',
-                    '/Content/images/android-chrome-512x512.png'
+                    '/Content/images/apple-touch-icon.png',
+                    '/Content/images/android-chrome-512x512.png',
+                    '/Content/sw-toolbox/sw-toolbox.js',
+                    '/Content/js/CreateTopic.js',
+                    '/Content/js/Topic.js',
+                    '/Content/js/site.js',
+                    '/Content/css/site.css',
+                    '/Content/lib/bootstrap/dist/css/bootstrap.min.css',
+                    '/Content/lib/bootstrap/dist/js/bootstrap.min.js',
+                    '/Content/lib/jquery/dist/jquery.min.js'
                 ]);
             }));
 });
 
-var dbVersion = 8;
+var dbVersion = 13;
 
 self.addEventListener('sync', function (event) {
     console.log('handling sync event');
@@ -143,13 +150,21 @@ toolbox.router.get('/Content/*', toolbox.cacheFirst, {
     }
 });
 
-toolbox.router.get('/*', toolbox.networkFirst, {
+toolbox.router.get('/*', function (request, values, options) {
+    console.log('handling get request');
+    return toolbox.networkFirst(request, values, options)
+        .catch(function (err) {
+            console.log('failed get request');
+            return caches.match(new Request('/Content/offline.html'));
+        });
+}, {
     networkTimeoutSeconds: 1,
     cache: {
         name: spCaches.dynamic,
-        maxEntries: 4
+        maxEntries: 25
     }
 });
+
 
 
 //self.addEventListener('fetch', function (event) {

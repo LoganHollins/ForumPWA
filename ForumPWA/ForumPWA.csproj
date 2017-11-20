@@ -61,4 +61,10 @@
     <TypeScriptCompile Include="wwwroot\Content\sw-toolbox\index.d.ts" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="wwwroot\favicon.ico">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>
