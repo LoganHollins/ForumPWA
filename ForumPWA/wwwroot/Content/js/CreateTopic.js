@@ -51,6 +51,12 @@
                 };
             };
         } else {
+            //fetch('/Topic/create', {
+            //    method: 'POST',
+            //    body: val,
+            //    credentials: 'include'
+            //})
+            //evt.preventDefault();
             console.log('send data to server via ajax');
 }
 
